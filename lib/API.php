@@ -13,11 +13,15 @@ class API
 {
 	private $key = null;
 
+	// override parent constriuctor
+	public function __construct() {
+		$this->key = new \Kyte\APIKey();
+	}
+
 	// if origin is left null then origin validation is skipped
 	public function init($public_key, $origin = null)
 	{
 		if (isset($public_key)) {
-			$this->key = new \Kyte\APIKey();
 			if (!$this->key->retrieve('public_key', $public_key)) throw new \Exception("API key not found.");
 			if (isset($origin)) {
 				if ($this->key->getParam('domain') != $origin) throw new \Exception("Origin does not match registered domain.");
