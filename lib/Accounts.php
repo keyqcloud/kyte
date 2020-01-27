@@ -8,37 +8,35 @@ class Accounts extends Collection {
 		return [
 			'name'		=> 'account',
 			'struct'	=> [
-				[
-					'id'		=> [
-						'type'		=> 'i',
-						'required'	=> true,
-					],
+				'id'		=> [
+					'type'		=> 'i',
+					'required'	=> true,
+				],
 
-					'deleted'	=> [
-						'type'		=> 'i',
-						'required'	=> false,
-						'date'		=> false,
-					],
+				'deleted'	=> [
+					'type'		=> 'i',
+					'required'	=> false,
+					'date'		=> false,
+				],
 
-					'name'		=> [
-						'type'		=> 's',
-						'required'	=> true,
-					],
+				'name'		=> [
+					'type'		=> 's',
+					'required'	=> true,
+				],
 
-					'email'		=> [
-						'type'		=> 's',
-						'required'	=> true,
-					],
+				'email'		=> [
+					'type'		=> 's',
+					'required'	=> true,
+				],
 
-					'password'	=> [
-						'type'		=> 's',
-						'required'	=> true,
-					],
+				'password'	=> [
+					'type'		=> 's',
+					'required'	=> true,
+				],
 
-					'role_id'	=> [
-						'type'		=> 'i',
-						'required'	=> true,
-					],
+				'role_id'	=> [
+					'type'		=> 'i',
+					'required'	=> true,
 				],
 			],
 		];

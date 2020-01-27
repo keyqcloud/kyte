@@ -8,42 +8,40 @@ class Session extends BaseObject {
 		return [
 			'name'		=> 'session',
 			'struct'	=> [
-				[
-					'id'			=> [
-						'type'		=> 'i',
-						'required'	=> true,
-						'date'		=> false,
-					],
+				'id'			=> [
+					'type'		=> 'i',
+					'required'	=> true,
+					'date'		=> false,
+				],
 
-					'deleted'	=> [
-						'type'		=> 'i',
-						'required'	=> false,
-						'date'		=> false,
-					],
+				'deleted'	=> [
+					'type'		=> 'i',
+					'required'	=> false,
+					'date'		=> false,
+				],
 
-					'uid'		=> [
-						'type'		=> 'i',
-						'required'	=> true,
-						'date'		=> false,
-					],
+				'uid'		=> [
+					'type'		=> 'i',
+					'required'	=> true,
+					'date'		=> false,
+				],
 
-					'create_date'	=> [
-						'type'		=> 'i',
-						'required'	=> true,
-						'date'		=> true,
-					],
+				'create_date'	=> [
+					'type'		=> 'i',
+					'required'	=> true,
+					'date'		=> true,
+				],
 
-					'exp_date'		=> [
-						'type'		=> 'i',
-						'required'	=> true,
-						'date'		=> true,
-					],
+				'exp_date'		=> [
+					'type'		=> 'i',
+					'required'	=> true,
+					'date'		=> true,
+				],
 
-					'token'		=> [
-						'type'		=> 's',
-						'required'	=> true,
-						'date'		=> false,
-					],
+				'token'		=> [
+					'type'		=> 's',
+					'required'	=> true,
+					'date'		=> false,
 				],
 			],
 		];
