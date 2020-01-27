@@ -6,7 +6,7 @@ class APIKey extends BaseObject {
 
 	protected static function getTable() {
 		return [
-			'name'		=> 'Account',
+			'name'		=> 'apikey',
 			'struct'	=> [
 				[
 					'id'			=> [

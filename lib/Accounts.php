@@ -6,7 +6,7 @@ class Accounts extends Collection {
 
 	public static function getTable() {
 		return [
-			'name'		=> 'Account',
+			'name'		=> 'account',
 			'struct'	=> [
 				[
 					'id'		=> [

@@ -6,7 +6,7 @@ class Session extends BaseObject {
 
 	protected static function getTable() {
 		return [
-			'name'		=> 'Account',
+			'name'		=> 'session',
 			'struct'	=> [
 				[
 					'id'			=> [
