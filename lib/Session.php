@@ -10,7 +10,7 @@ class Session extends BaseObject {
 			'struct'	=> [
 				'id'			=> [
 					'type'		=> 'i',
-					'required'	=> true,
+					'required'	=> false,
 					'date'		=> false,
 				],
 

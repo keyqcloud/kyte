@@ -10,7 +10,8 @@ class Accounts extends Collection {
 			'struct'	=> [
 				'id'		=> [
 					'type'		=> 'i',
-					'required'	=> true,
+					'required'	=> false,
+					'date'		=> false,
 				],
 
 				'deleted'	=> [
