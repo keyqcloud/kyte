@@ -36,7 +36,6 @@ class BaseObject
 	 * @param array $params
 	 */
 	protected function bindTypes($params) {
-		{
 		$types = '';
 		foreach ($params as $key => $value) {
 			if (array_key_exists($key, $this->table['struct'])) {
