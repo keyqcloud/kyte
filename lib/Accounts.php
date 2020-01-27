@@ -14,6 +14,12 @@ class Accounts extends Collection {
 						'required'	=> true,
 					],
 
+					'deleted'	=> [
+						'type'		=> 'i',
+						'required'	=> false,
+						'date'		=> false,
+					],
+
 					'name'		=> [
 						'type'		=> 's',
 						'required'	=> true,
