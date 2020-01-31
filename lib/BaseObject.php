@@ -266,8 +266,20 @@ class BaseObject
 		return $retvals;
 	}
 
-	public function getAllParams() {
-		return $this->values;
+	public function getAllParams($formatdate = false) {
+		if ($formatdate) {
+			$retvals = [];
+			foreach ($this->values as $key => $value) {
+				if ($this->table['struct'][$key]['date']) {
+					$retvals[$key] = date('Y/m/d', $values);
+				} else {
+					$retvals[$key] = $values;
+				}
+			}
+			return $retvals;
+		} else {
+			return $this->values;
+		}
 	}
 
 	protected function clearParams() {
