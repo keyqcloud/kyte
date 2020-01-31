@@ -270,8 +270,12 @@ class BaseObject
 		if ($formatdate) {
 			$retvals = [];
 			foreach ($this->values as $key => $value) {
-				if ($this->table['struct'][$key]['date']) {
-					$retvals[$key] = date('Y/m/d', $values);
+				if (array_key_exists($key, $this->table['struct'])) {
+					if ($this->table['struct'][$key]['date']) {
+						$retvals[$key] = date('Y/m/d', $values);
+					} else {
+						$retvals[$key] = $values;
+					}
 				} else {
 					$retvals[$key] = $values;
 				}
