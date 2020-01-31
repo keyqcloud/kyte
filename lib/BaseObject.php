@@ -272,12 +272,12 @@ class BaseObject
 			foreach ($this->values as $key => $value) {
 				if (array_key_exists($key, $this->table['struct'])) {
 					if ($this->table['struct'][$key]['date']) {
-						$retvals[$key] = date('Y/m/d', $values);
+						$retvals[$key] = date('Y/m/d', $value);
 					} else {
-						$retvals[$key] = $values;
+						$retvals[$key] = $value;
 					}
 				} else {
-					$retvals[$key] = $values;
+					$retvals[$key] = $value;
 				}
 			}
 			return $retvals;
