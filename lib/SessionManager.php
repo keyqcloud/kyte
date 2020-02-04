@@ -62,7 +62,7 @@ class SessionManager
 			throw new \Exception("No valid session.");
 		}
 		$user = new \Kyte\Account();
-		if (!$user->retrieve('id', $session->getParam('uid'))) {
+		if (!$user->retrieve('id', $this->session->getParam('uid'))) {
 			throw new \Exception("Invalid session.");
 		}
 		if (time() > $this->session->getParam('exp_date')) {
