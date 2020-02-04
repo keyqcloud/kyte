@@ -14,7 +14,7 @@ class SessionManager
 	private $session;
 
 	public function __construct() {
-		$session = new \Kyte\Session();
+		$this->session = new \Kyte\Session();
 	}
 
 	public function create($email, $password)
