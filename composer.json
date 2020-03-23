@@ -1,5 +1,5 @@
-    {
-    "name": "evogrouptech/Kyte",
+{
+    "name": "keyqcloud/Kyte",
     "description": "Light-weight framework for developing versatile PHP applications.",
     "require": {
         "php": ">=7.2",
