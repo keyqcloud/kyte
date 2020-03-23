@@ -23,9 +23,6 @@ class API
 	{
 		if (isset($public_key)) {
 			if (!$this->key->retrieve('public_key', $public_key)) throw new \Exception("API key not found.");
-			if (isset($origin)) {
-				if ($this->key->getParam('domain') != $origin) throw new \Exception("Origin does not match registered domain.");
-			}
 		} else throw new \Exception("API key is required.");
 		
 	}
