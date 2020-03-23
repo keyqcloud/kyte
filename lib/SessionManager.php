@@ -13,16 +13,16 @@ class SessionManager
 {
 	private $session;
 
-	public function __construct() {
-		$this->session = new \Kyte\Session();
+	public function __construct($model) {
+		$this->session = new \Kyte\ModelObject($model);
 	}
 
-	public function create($email, $password)
+	public function create($model, $email, $password)
 	{
 		if (isset($email, $password)) {
 
 			// verify user
-			$user = new \Kyte\Account;
+			$user = new \Kyte\ModelObject($model);
 
 			if (!$user->retrieve('email', $email)) {
 				throw new \Exception("Invalid email or password.");
@@ -61,7 +61,7 @@ class SessionManager
 		if (!$this->session->retrieve('token', $token)) {
 			throw new \Exception("No valid session.");
 		}
-		$user = new \Kyte\Account();
+		$user = new \Kyte\ModelObject($model);
 		if (!$user->retrieve('id', $this->session->getParam('uid'))) {
 			throw new \Exception("Invalid session.");
 		}

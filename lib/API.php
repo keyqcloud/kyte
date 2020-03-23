@@ -14,8 +14,8 @@ class API
 	private $key = null;
 
 	// override parent constriuctor
-	public function __construct() {
-		$this->key = new \Kyte\APIKey();
+	public function __construct($model) {
+		$this->key = new \Kyte\ModelObject($model);
 	}
 
 	// if origin is left null then origin validation is skipped
