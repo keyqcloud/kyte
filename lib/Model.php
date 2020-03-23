@@ -11,16 +11,6 @@ namespace Kyte;
 
 class Model
 {
-	// key-value describing model
-	// 
-	//	[
-	// 		'name'		=> 'name of table (also name of object)',
-	// 		'struct'	=> [
-	//			'column name' => [ 'type' => 'i/s/d', 'requred' => true/false ],
-	//			...
-	//			'column name' => [ 'type' => 'i/s/d', 'requred' => true/false ],
-	//		]
-	//	]
 	protected $model = [];
 
 	public $objects = [];
@@ -78,6 +68,14 @@ class Model
 	public function count()
 	{
 		return count($this->objects);
+	}
+
+	public function returnFirst()
+	{
+		if ($this->count() > 0) {
+			return $this->objects[0];
+		}
+		return null;
 	}
 
 	protected function clearModel()
