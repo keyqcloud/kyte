@@ -19,7 +19,7 @@ class ModelObject
 	//			'column name' => [
 	//				'type'		=>	'i/s/d',		(*required*)
 	// 				'requred'	=>	true/false,		(*required*)
-	// 				'date'		=>	true/false,
+	// 				'date'		=>	true/false,		(*required*)
 	// 				'kms'		=>	true/false,
 	//		 	],
 	//			...
@@ -271,13 +271,13 @@ class ModelObject
 		return $retvals;
 	}
 
-	public function getAllParams($formatdate = false) {
-		if ($formatdate) {
+	public function getAllParams($dateformat = null) {
+		if ($dateformat) {
 			$retvals = [];
 			foreach ($this->values as $key => $value) {
 				if (array_key_exists($key, $this->model['struct'])) {
 					if ($this->model['struct'][$key]['date']) {
-						$retvals[$key] = date('Y/m/d', $value);
+						$retvals[$key] = date($dateformat, $value);
 					} else {
 						$retvals[$key] = $value;
 					}
