@@ -18,18 +18,17 @@ class Mail {
 	/*
 	 * Send email via SendGrid
 	 *
-	 * @param array $to
-	 * @param string $from_email
-	 * @param string $from_name
+	 * @param array $to[email=>name]
+	 * @param array $from[email=>name]
 	 * @param string $subject
 	 * @param string $body
 	 */
-	public static function email($to, $from_email, $from_name, $subject, $body)
+	public static function email($to, $from, $subject, $body)
 	{
 		$sg = new \SendGrid(self::$sendgridAPIKey);
 
 		$email = new \SendGrid\Mail\Mail();
-		$email->setFrom($from_email, $from_name);
+		$email->setFrom($from['address'], $from['name']);
 		$email->setSubject($subject);
 		foreach ($to as $address => $name) {
 			$email->addTo($address, $name);
