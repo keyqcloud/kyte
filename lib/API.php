@@ -19,7 +19,7 @@ class API
 	}
 
 	// if origin is left null then origin validation is skipped
-	public function init($public_key, $origin = null)
+	public function init($public_key)
 	{
 		if (isset($public_key)) {
 			if (!$this->key->retrieve('public_key', $public_key)) throw new \Exception("API key not found.");
