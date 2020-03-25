@@ -12,37 +12,37 @@ namespace Kyte;
 class SessionManager
 {
 	private $session;
+	private $user;
 
-	public function __construct($model) {
-		$this->session = new \Kyte\ModelObject($model);
+	public function __construct($session_model, $account_model) {
+		$this->session = new \Kyte\ModelObject($session_model);
+		$this->user = new \Kyte\ModelObject($account_model);
 	}
 
-	public function create($model, $email, $password)
+	public function create($email, $password)
 	{
 		if (isset($email, $password)) {
 
 			// verify user
-			$user = new \Kyte\ModelObject($model);
-
-			if (!$user->retrieve('email', $email)) {
+			if (!$this->user->retrieve('email', $email)) {
 				throw new \Exception("Invalid email or password.");
 			}
 
-			if (!password_verify($password, $user->getParam('password'))) {
+			if (!password_verify($password, $this->user->getParam('password'))) {
 				throw new \Exception("Invalid email or password.");
 			}
 
 			// delete existing session
-			if ($this->session->retrieve('uid', $user->getParam('id'))) {
+			if ($this->session->retrieve('uid', $this->user->getParam('id'))) {
 				$this->session->delete();
 			}
 
 			$time = time();
 			$exp_time = $time+(60*60);
-			$token = base64_encode(hash_hmac('sha256', $user->getParam('id').'-'.$time, $exp_time));
+			$token = base64_encode(hash_hmac('sha256', $this->user->getParam('id').'-'.$time, $exp_time));
 			// create new session
 			$res = $this->session->create([
-				'uid' => $user->getParam('id'),
+				'uid' => $this->user->getParam('id'),
 				'create_date' => $time,
 				'exp_date' => $exp_time,
 				'token' => $token,
@@ -61,8 +61,8 @@ class SessionManager
 		if (!$this->session->retrieve('token', $token)) {
 			throw new \Exception("No valid session.");
 		}
-		$user = new \Kyte\ModelObject($model);
-		if (!$user->retrieve('id', $this->session->getParam('uid'))) {
+		
+		if (!$this->user->retrieve('id', $this->session->getParam('uid'))) {
 			throw new \Exception("Invalid session.");
 		}
 		if (time() > $this->session->getParam('exp_date')) {
