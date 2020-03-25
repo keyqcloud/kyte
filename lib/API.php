@@ -33,7 +33,7 @@ class API
 
 		if (isset($signature, $time)) {
 			$hash1 = hash_hmac('SHA256', $time, $this->key->getParam('secret_key'), true);
-			$hash2 = hash_hmac('SHA256', $this->key->getParam('domain'), $hash1, true);
+			$hash2 = hash_hmac('SHA256', $this->key->getParam('identifier'), $hash1, true);
 			$calculated_signature = hash_hmac('SHA256', $this->key->getParam('public_key'), $hash2);
 
 			if ($calculated_signature != $signature)
