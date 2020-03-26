@@ -39,7 +39,7 @@ class SessionManager
 
 			$time = time();
 			$exp_time = $time+(60*60);
-			$token = base64_encode(hash_hmac('sha256', $this->user->getParam('id').'-'.$time, $exp_time));
+			$token = hash_hmac('sha256', $this->user->getParam('id').'-'.$time, $exp_time);
 			// create new session
 			$res = $this->session->create([
 				'uid' => $this->user->getParam('id'),
@@ -70,10 +70,11 @@ class SessionManager
 		}
 		$time = time();
 		$exp_time = $time+(60*60);
-		// $token = base64_encode(hash_hmac('sha256', $user->getParam('id').'-'.$time, $exp_time));
+		$token = hash_hmac('sha256', $user->getParam('id').'-'.$time, $exp_time);
 		$this->session->save([
 			'create_date' => $time,
 			'exp_date' => $exp_time,
+			'token' => $token,
 		]);
 		return $token;
 	}
