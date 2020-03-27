@@ -19,6 +19,13 @@ class ModelObject
 	//			'column name' => [
 	//				'type'		=>	'i/s/d',		(*required*)
 	// 				'requred'	=>	true/false,		(*required*)
+	// 				'pk'		=>	true/false,
+	// 				'unsigned'	=>	true/false,
+	// 				'text'		=>	true/false,
+	// 				'size'		=>	integer,
+	//				'default'	=>	value,
+	// 				'precision'	=>	integer,		(* for decimal type *)
+	// 				'scale'		=>	integer,		(* for decimal type *)
 	// 				'date'		=>	true/false,		(*required*)
 	// 				'kms'		=>	true/false,
 	//		 	],
