@@ -284,7 +284,7 @@ class ModelObject
 			foreach ($this->values as $key => $value) {
 				if (array_key_exists($key, $this->model['struct'])) {
 					if ($this->model['struct'][$key]['date']) {
-						$retvals[$key] = date($dateformat, $value);
+						$retvals[$key] = ($value > 0 ? date($dateformat, $value) : '');
 					} else {
 						$retvals[$key] = $value;
 					}
