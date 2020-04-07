@@ -56,7 +56,7 @@ class SessionManager
 		
 	}
 
-	public function validate($token)
+	public function validate($token, $new = false)
 	{
 		if (!$this->session->retrieve('token', $token)) {
 			throw new \Exception("No valid session.");
@@ -70,7 +70,9 @@ class SessionManager
 		}
 		$time = time();
 		$exp_time = $time+(60*60);
-		$token = hash_hmac('sha256', $user->getParam('id').'-'.$time, $exp_time);
+		if ($new) {
+			$token = hash_hmac('sha256', $user->getParam('id').'-'.$time, $exp_time);
+		}
 		$this->session->save([
 			'create_date' => $time,
 			'exp_date' => $exp_time,
