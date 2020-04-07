@@ -61,6 +61,40 @@ class Model
 		}
 	}
 
+	public function from($field, $start, $end, $equalto = false, $all = false)
+	{
+		try {
+			$dataObjects = array();
+			$data = array();
+
+			if (!isset($field, $value)) throw new \Exception("Range is required and was not provided.");
+
+			$sql = "WHERE `$field` > '$start' AND `$field` < '$end'";
+			if ($equalto) {
+				$sql = "WHERE `$field` >= '$start' AND `$field` <= '$end'";
+			}
+
+			if (!$all) {
+				$sql .= " AND `deleted` = '0'";
+			}
+
+			$data = DBI::select($this->model['name'], null, $sql);
+
+			foreach ($data as $item) {
+				$obj = new \Kyte\ModelObject($this->model);
+				$obj->retrieve('id', $item['id'], null, null, $all);
+				$dataObjects[] = $obj;
+			}
+
+			$this->objects = $dataObjects;
+
+			return true;
+		} catch (\Exception $e) {
+			throw $e;
+			return false;
+		}
+	}
+
 	/*
 	 * Returns array count of objects in Model
 	 *
