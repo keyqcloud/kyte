@@ -71,7 +71,7 @@ class SessionManager
 		$time = time();
 		$exp_time = $time+(60*60);
 		if ($new) {
-			$token = hash_hmac('sha256', $user->getParam('id').'-'.$time, $exp_time);
+			$token = hash_hmac('sha256', $this->user->getParam('id').'-'.$time, $exp_time);
 		}
 		$this->session->save([
 			'create_date' => $time,
