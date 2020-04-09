@@ -30,9 +30,8 @@ class Mail {
 		$email = new \SendGrid\Mail\Mail();
 		$email->setFrom($from['address'], $from['name']);
 		$email->setSubject($subject);
-		foreach ($to as $address => $name) {
-			$email->addTo($address, $name);
-		}
+		$email->addTo($to['address'], $to['name']);
+		
 		$email->addContent("text/plain", $body);
 
 		$response = $sg->send($email);
