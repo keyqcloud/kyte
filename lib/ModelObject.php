@@ -88,6 +88,8 @@ class ModelObject
 	{
 		$this->validateRequiredParams($params);
 
+		$params['date_created'] = time();
+
 		try {
 			$types = $this->bindTypes($params);
 			$id = DBI::insert($this->model['name'], $params, $types);
@@ -147,9 +149,10 @@ class ModelObject
 			return false;
 		}
 
-		$types = $this->bindTypes($params);
+		$params['date_modified'] = time();
 
 		try {
+			$types = $this->bindTypes($params);
 			DBI::update($this->model['name'], $id, $params, $types);
 			return true;
 		} catch (\Exception $e) {
@@ -218,7 +221,7 @@ class ModelObject
 				return false;
 			}
 
-			DBI::update($this->model['name'], $id, ['deleted' => 1], 'i');
+			DBI::update($this->model['name'], $id, ['date_deleted' => time(), 'deleted' => 1], 'ii');
 
 			return true;
 		} catch (\Exception $e) {
