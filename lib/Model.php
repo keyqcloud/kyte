@@ -27,7 +27,7 @@ class Model
 
 			if (isset($field, $value)) {
 				if ($isLike) {
-					$sql = "WHERE `$field` LIKE '$value'";
+					$sql = "WHERE `$field` LIKE '%$value%'";
 				} else {
 					$sql = "WHERE `$field` = '$value'";
 				}
@@ -41,6 +41,53 @@ class Model
 						$sql .= " AND `{$condition['field']}` = '{$condition['value']}'";
 					}
 				}
+				$data = DBI::select($this->model['name'], null, $sql);
+			} else {
+				$data = $all ? DBI::select($this->model['name'], null, null) : DBI::select($this->model['name'], null, "WHERE `deleted` = '0'");
+			}
+
+			foreach ($data as $item) {
+				$obj = new \Kyte\ModelObject($this->model);
+				$obj->retrieve('id', $item['id'], null, null, $all);
+				$dataObjects[] = $obj;
+			}
+
+			$this->objects = $dataObjects;
+
+			return true;
+		} catch (\Exception $e) {
+			throw $e;
+			return false;
+		}
+	}
+
+	public function like($fields = null, $value = null, $all = false)
+	{
+		try {
+			$dataObjects = array();
+			$data = array();
+
+			if (isset($fields, $value)) {
+				
+				if (!$all) {
+					$sql = "WHERE (";
+				} else {
+					$sql = "WHERE ";
+				}
+
+				$first = true;
+				foreach($fields as $field) {
+					if ($first) {
+						$sql .= "`$field` LIKE '%$value%'";
+						$first = false;
+					} else
+						$sql .= " OR `$field` LIKE '%$value%'";
+				}
+
+				if (!$all) {
+					$sql .= ") AND `deleted` = '0'";
+				}
+				
 				$data = DBI::select($this->model['name'], null, $sql);
 			} else {
 				$data = $all ? DBI::select($this->model['name'], null, null) : DBI::select($this->model['name'], null, "WHERE `deleted` = '0'");
