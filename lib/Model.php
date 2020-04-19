@@ -27,7 +27,7 @@ class Model
 
 			if (isset($field, $value)) {
 				if ($isLike) {
-					$sql = "WHERE `$field` LIKE '$value'";
+					$sql = "WHERE `$field` LIKE '%$value%'";
 				} else {
 					$sql = "WHERE `$field` = '$value'";
 				}
