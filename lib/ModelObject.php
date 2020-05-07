@@ -88,6 +88,7 @@ class ModelObject
 	{
 		$this->validateRequiredParams($params);
 
+		// audit attributes - set date created
 		$params['date_created'] = time();
 
 		try {
@@ -149,6 +150,7 @@ class ModelObject
 			return false;
 		}
 
+		// audit attributes - set date modified
 		$params['date_modified'] = time();
 
 		try {
@@ -194,7 +196,7 @@ class ModelObject
 	}
 
 	/*
-	 * Delete entry information with specified conditions
+	 * Delete entry information with specified conditions - will only mark item as deleted
 	 *
 	 * @param string $field
 	 * @param string $value
@@ -221,6 +223,7 @@ class ModelObject
 				return false;
 			}
 
+			// set deleted flag and audit attribute - date deleted
 			DBI::update($this->model['name'], $id, ['date_deleted' => time(), 'deleted' => 1], 'ii');
 
 			return true;
@@ -230,6 +233,7 @@ class ModelObject
 		}
 	}
 
+	// purge method will actually delete from database
 	public function purge($field = null, $value = null)
 	{
 		try {
