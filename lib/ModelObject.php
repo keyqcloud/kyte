@@ -53,9 +53,6 @@ class ModelObject
 			if (array_key_exists($key, $this->model['struct'])) {
 				$this->setParam($key, $value);
 				$types .= $this->model['struct'][$key]['type'];
-				if ($this->model['struct'][$key]['date']) {
-					$params[$key] = strtotime($value);
-				}
 			}
 		}
 
