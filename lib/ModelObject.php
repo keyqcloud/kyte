@@ -47,12 +47,15 @@ class ModelObject
 	 *
 	 * @param array $params
 	 */
-	protected function bindTypes($params) {
+	protected function bindTypes(&$params) {
 		$types = '';
 		foreach ($params as $key => $value) {
 			if (array_key_exists($key, $this->model['struct'])) {
 				$this->setParam($key, $value);
 				$types .= $this->model['struct'][$key]['type'];
+				if ($this->model['struct'][$key]['date']) {
+					$params[$key] = strtotime($value);
+				}
 			}
 		}
 
