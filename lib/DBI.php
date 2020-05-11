@@ -102,7 +102,7 @@ class DBI {
 
 		$stmt = self::$dbConn->prepare($query);
 		if($stmt === false) {
-  			throw new \Exception("Error preparing mysql statement '$query'; ".htmlspecialchars($stmt->error), 1);
+  			throw new \Exception("Error preparing mysql statement '$query'; ".htmlspecialchars(self::$dbConn->error), 1);
   			return false;
 		}
  
@@ -110,7 +110,7 @@ class DBI {
 		// call_user_func_array(array($stmt, 'bind_param'), $bindParams);
 
 		if (!$stmt->execute()) {
-			throw new \Exception("Error executing mysql statement '$query'; ".htmlspecialchars($stmt->error), 1);
+			throw new \Exception("Error executing mysql statement '$query'; ".htmlspecialchars(self::$dbConn->error), 1);
 			$stmt->close();
 			return false;
 		}
@@ -155,7 +155,7 @@ class DBI {
 
 		$stmt = self::$dbConn->prepare($query);
 		if($stmt === false) {
-  			throw new \Exception("Error preparing mysql statement '$query'; ".htmlspecialchars($stmt->error), 1);
+  			throw new \Exception("Error preparing mysql statement '$query'; ".htmlspecialchars(self::$dbConn->error), 1);
   			return false;
 		}
  
@@ -163,7 +163,7 @@ class DBI {
 		// call_user_func_array(array($stmt, 'bind_param'), $bindParams);
 
 		if (!$stmt->execute()) {
-			throw new \Exception("Error executing mysql statement '$query'; ".htmlspecialchars($stmt->error), 1);
+			throw new \Exception("Error executing mysql statement '$query'; ".htmlspecialchars(self::$dbConn->error), 1);
 			$stmt->close();
 			return false;
 		}
@@ -189,14 +189,14 @@ class DBI {
 
 		$stmt = self::$dbConn->prepare($query);
 		if($stmt === false) {
-  			throw new \Exception("Error preparing mysql statement '$query'; ".htmlspecialchars($stmt->error), 1);
+  			throw new \Exception("Error preparing mysql statement '$query'; ".htmlspecialchars(self::$dbConn->error), 1);
   			return false;
 		}
  
 		$stmt->bind_param('i', $id);
 
 		if (!$stmt->execute()) {
-			throw new \Exception("Error executing mysql statement '$query'; ".htmlspecialchars($stmt->error), 1);
+			throw new \Exception("Error executing mysql statement '$query'; ".htmlspecialchars(self::$dbConn->error), 1);
 			$stmt->close();
 			return false;
 		}
