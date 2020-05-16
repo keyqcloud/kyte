@@ -11,7 +11,7 @@ namespace Kyte;
 
 class Model
 {
-	protected $model;
+	public $model;
 
 	public $objects = [];
 

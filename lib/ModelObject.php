@@ -33,7 +33,7 @@ class ModelObject
 	//			'column name' => [ 'type' => 'i/s/d', 'requred' => true/false ],
 	//		]
 	//	]
-	protected $model;
+	public $model;
 
 	protected $values = [];
 
