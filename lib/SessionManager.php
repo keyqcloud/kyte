@@ -13,10 +13,14 @@ class SessionManager
 {
 	private $session;
 	private $user;
+	private $username_field;
+	private $password_field;
 
-	public function __construct($session_model, $account_model) {
+	public function __construct($session_model, $account_model, $username_field, $password_field) {
 		$this->session = new \Kyte\ModelObject($session_model);
 		$this->user = new \Kyte\ModelObject($account_model);
+		$this->username_field = $username_field;
+		$this->password_field = $password_field;
 	}
 
 	protected function generateTxToken($time, $exp_time) {
@@ -28,21 +32,21 @@ class SessionManager
 	protected function generateSessionToken() {
 		if ($this->user) {
 			$bytes = random_bytes(5);
-			return hash_hmac('sha256', $this->user->getParam('email'), bin2hex($bytes));
+			return hash_hmac('sha256', $this->user->getParam($this->username_field), bin2hex($bytes));
 		} else return 0;
 	}
 
-	public function create($email, $password)
+	public function create($username, $password)
 	{
-		if (isset($email, $password)) {
+		if (isset($username, $password)) {
 
 			// verify user
-			if (!$this->user->retrieve('email', $email)) {
-				throw new \Exception("Invalid email or password.");
+			if (!$this->user->retrieve($this->username_field, $username)) {
+				throw new \Exception("Invalid username or password.");
 			}
 
-			if (!password_verify($password, $this->user->getParam('password'))) {
-				throw new \Exception("Invalid email or password.");
+			if (!password_verify($password, $this->user->getParam($this->password_field))) {
+				throw new \Exception("Invalid username or password.");
 			}
 
 			// delete existing session
