@@ -36,12 +36,12 @@ class SessionManager
 		} else return 0;
 	}
 
-	public function create($username, $password)
+	public function create($username, $password, $conditions = null)
 	{
 		if (isset($username, $password)) {
 
 			// verify user
-			if (!$this->user->retrieve($this->username_field, $username)) {
+			if (!$this->user->retrieve($this->username_field, $username, $conditions)) {
 				throw new \Exception("Invalid username or password.");
 			}
 
