@@ -117,9 +117,19 @@ class ModelObject
 		try {
 			if (isset($field, $value)) {
 				$sql = $all ? "WHERE `$field` = '$value'" : "WHERE `$field` = '$value' AND `deleted` = '0'";
+	
+				// if conditions are set, add them to the sql statement
 				if(isset($conditions)) {
+					// iterate through each condition
 					foreach($conditions as $condition) {
-						$sql .= " AND `{$condition['field']}` = '{$condition['value']}'";
+						// check if an evaluation operator is set
+						if (isset($condition['operator'])) {
+							$sql .= " AND `{$condition['field']}` {$condition['operator']} '{$condition['value']}'";
+						}
+						// default to equal
+						else {
+							$sql .= " AND `{$condition['field']}` = '{$condition['value']}'";
+						}
 					}
 				}
 				$data = DBI::select($this->model['name'], null, $sql);
