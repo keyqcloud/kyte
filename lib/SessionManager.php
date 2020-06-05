@@ -23,17 +23,13 @@ class SessionManager
 		$this->password_field = $password_field;
 	}
 
-	protected function generateTxToken($time, $exp_time) {
-		if ($this->user) {
-			return hash_hmac('sha256', $this->user->getParam('id').'-'.$time, $exp_time);
-		} else return 0;
+	protected function generateTxToken($time, $exp_time, $string) {
+		return hash_hmac('sha256', $string.'-'.$time, $exp_time);
 	}
 
-	protected function generateSessionToken() {
-		if ($this->user) {
-			$bytes = random_bytes(5);
-			return hash_hmac('sha256', $this->user->getParam($this->username_field), bin2hex($bytes));
-		} else return 0;
+	protected function generateSessionToken($string) {
+		$bytes = random_bytes(5);
+		return hash_hmac('sha256', $string, bin2hex($bytes));
 	}
 
 	public function create($username, $password, $conditions = null)
@@ -61,8 +57,8 @@ class SessionManager
 				'uid' => $this->user->getParam('id'),
 				'create_date' => $time,
 				'exp_date' => $exp_time,
-				'sessionToken' => $this->generateSessionToken(),
-				'txToken' => $this->generateTxToken($time, $exp_time),
+				'sessionToken' => $this->generateSessionToken($this->user->getParam($this->username_field)),
+				'txToken' => $this->generateTxToken($time, $exp_time, $this->user->getParam($this->username_field)),
 			]);
 			if (!$res) {
 				throw new \Exception("Unable to create session.");
@@ -89,7 +85,7 @@ class SessionManager
 		$time = time();
 		$exp_time = $time+(60*60);
 		if ($new) {
-			$txToken = $this->generateTxToken($time, $exp_time);
+			$txToken = $this->generateTxToken($time, $exp_time, $this->user->getParam($this->username_field));
 		}
 		$this->session->save([
 			'create_date' => $time,
