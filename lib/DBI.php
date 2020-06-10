@@ -98,7 +98,7 @@ class DBI {
 		$placeholder = str_repeat("?, ", count($params));
 		$placeholder = substr($placeholder, 0, -2);
 
-		$query = sprintf("INSERT INTO %s(%s) VALUES(%s)", $table, implode(',', $columns), $placeholder);
+		$query = sprintf("INSERT INTO `%s`(%s) VALUES(%s)", $table, implode(',', $columns), $placeholder);
 
 		$stmt = self::$dbConn->prepare($query);
 		if($stmt === false) {
@@ -135,7 +135,7 @@ class DBI {
 			self::connect();
 		}
 
-		$query = "UPDATE $table SET ";
+		$query = "UPDATE `$table` SET ";
 
 		// prepare bind params for call_user_func_array
 		$bindParams = array();
@@ -185,7 +185,7 @@ class DBI {
 			self::connect();
 		}
 
-		$query = "DELETE FROM $table WHERE id = ?";
+		$query = "DELETE FROM `$table` WHERE id = ?";
 
 		$stmt = self::$dbConn->prepare($query);
 		if($stmt === false) {
@@ -219,7 +219,7 @@ class DBI {
 			self::connect();
 		}
 
-		$query = "SELECT * FROM $table";
+		$query = "SELECT * FROM `$table`";
 
 		if(isset($id)) {
 			$query .= " WHERE id = $id";
