@@ -32,7 +32,7 @@ class Mail {
 		$email->setSubject($subject);
 		$email->addTo($to['address'], $to['name']);
 		
-		$email->addContent("text/plain", $body);
+		$email->addContent("text/html", $body);
 
 		$response = $sg->send($email);
 	}
