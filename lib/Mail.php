@@ -23,7 +23,7 @@ class Mail {
 	 * @param string $subject
 	 * @param string $body
 	 */
-	public static function email($to, $from, $subject, $body)
+	public static function email($to, $from, $subject, $body, $type = 'text/plain')
 	{
 		$sg = new \SendGrid(self::$sendgridAPIKey);
 
@@ -32,7 +32,7 @@ class Mail {
 		$email->setSubject($subject);
 		$email->addTo($to['address'], $to['name']);
 		
-		$email->addContent("text/html", $body);
+		$email->addContent($type, $body);
 
 		$response = $sg->send($email);
 	}
