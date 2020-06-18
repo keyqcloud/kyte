@@ -39,11 +39,11 @@ class SessionManager
 
 			// verify user
 			if (!$this->user->retrieve($this->username_field, $username, $conditions)) {
-				throw new \Exception("Invalid username or password.");
+				throw new \Kyte\SessionException("Invalid username or password.");
 			}
 
 			if (!password_verify($password, $this->user->getParam($this->password_field))) {
-				throw new \Exception("Invalid username or password.");
+				throw new \Kyte\SessionException("Invalid username or password.");
 			}
 
 			// delete existing session
@@ -62,26 +62,26 @@ class SessionManager
 				'txToken' => $this->generateTxToken($time, $exp_time, $this->user->getParam($this->username_field)),
 			]);
 			if (!$res) {
-				throw new \Exception("Unable to create session.");
+				throw new \Kyte\SessionException("Unable to create session.");
 			}
 
 			// return params for new session after successful creation
 			return $this->session->getAllParams();
-		} else throw new \Exception("Session name was not specified.");
+		} else throw new \Kyte\SessionException("Session name was not specified.");
 		
 	}
 
 	public function validate($txToken, $sessionToken, $new = true)
 	{
 		if (!$this->session->retrieve('txToken', $txToken, [[ 'field' => 'sessionToken', 'value' => $sessionToken ]])) {
-			throw new \Exception("No valid session.");
+			throw new \Kyte\SessionException("No valid session.");
 		}
 		
 		if (!$this->user->retrieve('id', $this->session->getParam('uid'))) {
-			throw new \Exception("Invalid session.");
+			throw new \Kyte\SessionException("Invalid session.");
 		}
 		if (time() > $this->session->getParam('exp_date')) {
-			throw new \Exception("Session expired.");
+			throw new \Kyte\SessionException("Session expired.");
 		}
 		$time = time();
 		$exp_time = $time+(60*60);
@@ -99,7 +99,7 @@ class SessionManager
 
 	public function destroy() {
 		if (!$this->session) {
-			throw new \Exception("No valid session.");
+			throw new \Kyte\SessionException("No valid session.");
 		}
 		$this->session->delete();
 		return true;
