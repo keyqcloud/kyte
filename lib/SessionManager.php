@@ -21,6 +21,7 @@ class SessionManager
 		$this->user = new \Kyte\ModelObject($account_model);
 		$this->username_field = $username_field;
 		$this->password_field = $password_field;
+		$this->timeout = $timeout;
 	}
 
 	protected function generateTxToken($time, $exp_time, $string) {
@@ -51,7 +52,7 @@ class SessionManager
 			}
 
 			$time = time();
-			$exp_time = $time+$timeout;
+			$exp_time = $time+$this->timeout;
 			// create new session
 			$res = $this->session->create([
 				'uid' => $this->user->getParam('id'),
