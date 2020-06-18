@@ -16,7 +16,7 @@ class SessionManager
 	private $username_field;
 	private $password_field;
 
-	public function __construct($session_model, $account_model, $username_field = 'email', $password_field = 'password') {
+	public function __construct($session_model, $account_model, $username_field = 'email', $password_field = 'password', $timeout = 3600) {
 		$this->session = new \Kyte\ModelObject($session_model);
 		$this->user = new \Kyte\ModelObject($account_model);
 		$this->username_field = $username_field;
@@ -51,7 +51,7 @@ class SessionManager
 			}
 
 			$time = time();
-			$exp_time = $time+(60*60);
+			$exp_time = $time+$timeout;
 			// create new session
 			$res = $this->session->create([
 				'uid' => $this->user->getParam('id'),
