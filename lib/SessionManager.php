@@ -48,7 +48,7 @@ class SessionManager
 			}
 
 			// delete existing session
-			if ($this->multilogon && $this->session->retrieve('uid', $this->user->getParam('id'))) {
+			if (!$this->multilogon && $this->session->retrieve('uid', $this->user->getParam('id'))) {
 				$this->session->delete();
 			}
 
