@@ -16,12 +16,13 @@ class SessionManager
 	private $username_field;
 	private $password_field;
 
-	public function __construct($session_model, $account_model, $username_field = 'email', $password_field = 'password', $timeout = 3600) {
+	public function __construct($session_model, $account_model, $username_field = 'email', $password_field = 'password', $multilogon = false, $timeout = 3600) {
 		$this->session = new \Kyte\ModelObject($session_model);
 		$this->user = new \Kyte\ModelObject($account_model);
 		$this->username_field = $username_field;
 		$this->password_field = $password_field;
 		$this->timeout = $timeout;
+		$this->multilogon = $multilogon;
 	}
 
 	protected function generateTxToken($time, $exp_time, $string) {
@@ -47,7 +48,7 @@ class SessionManager
 			}
 
 			// delete existing session
-			if ($this->session->retrieve('uid', $this->user->getParam('id'))) {
+			if ($this->multilogon && $this->session->retrieve('uid', $this->user->getParam('id'))) {
 				$this->session->delete();
 			}
 
