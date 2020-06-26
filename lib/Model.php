@@ -55,11 +55,11 @@ class Model
 					if (isset($order['field'], $order['direction'])) {
 						$order['direction'] = strtoupper($order['direction']);
 						if ($order['direction'] == 'ASC' || $order['direction'] == 'DESC') {
-							$sql .= " ORDER BY `{$order['field']}` {$order['direction']} = '0'";
+							$sql .= " ORDER BY `{$order['field']}` {$order['direction']}";
 						}
 					}
 				}
-				
+
 				$data = DBI::select($this->model['name'], null, $sql);
 			} else {
 				$sql = '';
@@ -71,7 +71,7 @@ class Model
 					if (isset($order['field'], $order['direction'])) {
 						$order['direction'] = strtoupper($order['direction']);
 						if ($order['direction'] == 'ASC' || $order['direction'] == 'DESC') {
-							$sql .= " ORDER BY `{$order['field']}` {$order['direction']} = '0'";
+							$sql .= " ORDER BY `{$order['field']}` {$order['direction']}";
 						}
 					}
 				}
