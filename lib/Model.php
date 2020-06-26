@@ -19,7 +19,7 @@ class Model
 		$this->model = $model;
 	}
 
-	public function retrieve($field = null, $value = null, $isLike = false, $conditions = null, $all = false)
+	public function retrieve($field = null, $value = null, $isLike = false, $conditions = null, $all = false, $order = null)
 	{
 		try {
 			$dataObjects = array();
@@ -50,9 +50,32 @@ class Model
 						}
 					}
 				}
+
+				if (isset($order)) {
+					if (isset($order['field'], $order['direction'])) {
+						$order['direction'] = strtoupper($order['direction']);
+						if ($order['direction'] == 'ASC' || $order['direction'] == 'DESC') {
+							$sql .= " ORDER BY `{$order['field']}` {$order['direction']} = '0'";
+						}
+					}
+				}
+				
 				$data = DBI::select($this->model['name'], null, $sql);
 			} else {
-				$data = $all ? DBI::select($this->model['name'], null, null) : DBI::select($this->model['name'], null, "WHERE `deleted` = '0'");
+				$sql = '';
+				if (!$all) {
+					$sql .= " WHERE `deleted` = '0'";
+				}
+
+				if (isset($order)) {
+					if (isset($order['field'], $order['direction'])) {
+						$order['direction'] = strtoupper($order['direction']);
+						if ($order['direction'] == 'ASC' || $order['direction'] == 'DESC') {
+							$sql .= " ORDER BY `{$order['field']}` {$order['direction']} = '0'";
+						}
+					}
+				}
+				$data = $all ? DBI::select($this->model['name'], null, null) : DBI::select($this->model['name'], null, $sql);
 			}
 
 			foreach ($data as $item) {
