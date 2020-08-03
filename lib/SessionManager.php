@@ -89,7 +89,9 @@ class SessionManager
 		if ($new) {
 			$txToken = $this->generateTxToken($time, $exp_time, $this->user->getParam($this->username_field));
 		}
-		$this->session->delete();
+		if (!$this->multilogon) {
+			$this->session->delete();
+		}
 		$this->session->create([
 			'uid' => $this->user->getParam('id'),
 			'create_date' => $time,
