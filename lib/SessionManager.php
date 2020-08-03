@@ -89,7 +89,9 @@ class SessionManager
 		if ($new) {
 			$txToken = $this->generateTxToken($time, $exp_time, $this->user->getParam($this->username_field));
 		}
-		$this->session->save([
+		$this->session->delete();
+		$this->session->create([
+			'uid' => $this->user->getParam('id'),
 			'create_date' => $time,
 			'exp_date' => $exp_time,
 			'sessionToken' => $sessionToken,
