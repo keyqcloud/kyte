@@ -35,48 +35,45 @@ class Model
 				if (!$all) {
 					$sql .= " AND `deleted` = '0'";
 				}
-
-				// if conditions are set, add them to the sql statement
-				if(isset($conditions)) {
-					// iterate through each condition
-					foreach($conditions as $condition) {
-						// check if an evaluation operator is set
-						if (isset($condition['operator'])) {
-							$sql .= " AND `{$condition['field']}` {$condition['operator']} '{$condition['value']}'";
-						}
-						// default to equal
-						else {
-							$sql .= " AND `{$condition['field']}` = '{$condition['value']}'";
-						}
-					}
-				}
-
-				if (isset($order)) {
-					if (isset($order['field'], $order['direction'])) {
-						$order['direction'] = strtoupper($order['direction']);
-						if ($order['direction'] == 'ASC' || $order['direction'] == 'DESC') {
-							$sql .= " ORDER BY `{$order['field']}` {$order['direction']}";
-						}
-					}
-				}
-
-				$data = DBI::select($this->model['name'], null, $sql);
 			} else {
 				$sql = '';
 				if (!$all) {
 					$sql .= " WHERE `deleted` = '0'";
 				}
+			}
 
-				if (isset($order)) {
-					if (isset($order['field'], $order['direction'])) {
-						$order['direction'] = strtoupper($order['direction']);
-						if ($order['direction'] == 'ASC' || $order['direction'] == 'DESC') {
-							$sql .= " ORDER BY `{$order['field']}` {$order['direction']}";
+			// if conditions are set, add them to the sql statement
+			if(isset($conditions)) {
+				// iterate through each condition
+				foreach($conditions as $condition) {
+					// check if an evaluation operator is set
+					if (isset($condition['operator'])) {
+						if ($sql != '') {
+							$sql .= " AND ";
 						}
+						$sql .= "`{$condition['field']}` {$condition['operator']} '{$condition['value']}'";
+					}
+					// default to equal
+					else {
+						if ($sql != '') {
+							$sql .= " AND ";
+						}
+						$sql .= "`{$condition['field']}` = '{$condition['value']}'";
 					}
 				}
-				$data = $all ? DBI::select($this->model['name'], null, null) : DBI::select($this->model['name'], null, $sql);
 			}
+
+			if (isset($order)) {
+				if (isset($order['field'], $order['direction'])) {
+					$order['direction'] = strtoupper($order['direction']);
+					if ($order['direction'] == 'ASC' || $order['direction'] == 'DESC') {
+						$sql .= " ORDER BY `{$order['field']}` {$order['direction']}";
+					}
+				}
+			}
+
+			$data = DBI::select($this->model['name'], null, $sql);
+			// $data = $all ? DBI::select($this->model['name'], null, null) : DBI::select($this->model['name'], null, $sql);
 
 			foreach ($data as $item) {
 				$obj = new \Kyte\ModelObject($this->model);
