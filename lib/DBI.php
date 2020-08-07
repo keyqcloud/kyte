@@ -227,6 +227,8 @@ class DBI {
 			$query .= " $condition";
 		}
 
+		error_log($query);
+
 		$result = self::$dbConn->query($query);
 		if($result === false) {
   			throw new \Exception("Error with mysql query '$query'.");
