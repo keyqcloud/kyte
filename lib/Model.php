@@ -93,7 +93,7 @@ class Model
 		}
 	}
 
-	public function like($fields = null, $value = null, $all = false)
+	public function search($fields = null, $values = null, $all = false)
 	{
 		try {
 			$dataObjects = array();
@@ -109,11 +109,13 @@ class Model
 
 				$first = true;
 				foreach($fields as $field) {
-					if ($first) {
-						$sql .= "`$field` LIKE '%$value%'";
-						$first = false;
-					} else
-						$sql .= " OR `$field` LIKE '%$value%'";
+					foreach($values as $value) {
+						if ($first) {
+							$sql .= "`$field` LIKE '%$value%'";
+							$first = false;
+						} else
+							$sql .= " OR `$field` LIKE '%$value%'";
+					}
 				}
 
 				if (!$all) {
