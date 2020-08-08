@@ -96,7 +96,7 @@ class Model
 			$dataObjects = array();
 			$data = array();
 
-			if (isset($fields, $value)) {
+			if (isset($fields, $values)) {
 				
 				if (!$all) {
 					$sql = "WHERE (";
