@@ -118,6 +118,8 @@ class Model
 				if (!$all) {
 					$sql .= ") AND `deleted` = '0'";
 				}
+
+				error_log($sql);
 				
 				$data = DBI::select($this->model['name'], null, $sql);
 			} else {
