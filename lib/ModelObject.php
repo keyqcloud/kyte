@@ -236,7 +236,7 @@ class ModelObject
 			} else {
 				// if $id is null from parameter, set it to the object's id value
 				if (!isset($o)) {
-					$o = $this->getParam('id') === false;
+					$o = $this->getParam('id');
 				}
 
 				$data = DBI::select($this->model['name'], $o);
