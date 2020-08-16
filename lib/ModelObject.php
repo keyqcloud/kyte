@@ -118,27 +118,43 @@ class ModelObject
 		try {
 			if (isset($field, $value)) {
 				$sql = $all ? "WHERE `$field` = '$value'" : "WHERE `$field` = '$value' AND `deleted` = '0'";
-	
-				// if conditions are set, add them to the sql statement
-				if(isset($conditions)) {
-					// iterate through each condition
-					foreach($conditions as $condition) {
-						// check if an evaluation operator is set
-						if (isset($condition['operator'])) {
-							$sql .= " AND `{$condition['field']}` {$condition['operator']} '{$condition['value']}'";
+			} else {
+				$sql = '';
+				if (!$all) {
+					$sql .= " WHERE `deleted` = '0'";
+				}
+			}
+
+			// if conditions are set, add them to the sql statement
+			if(isset($conditions)) {
+				// iterate through each condition
+				foreach($conditions as $condition) {
+					// check if an evaluation operator is set
+					if (isset($condition['operator'])) {
+						if ($sql != '') {
+							$sql .= " AND ";
 						}
-						// default to equal
-						else {
-							$sql .= " AND `{$condition['field']}` = '{$condition['value']}'";
+						$sql .= "`{$condition['field']}` {$condition['operator']} '{$condition['value']}'";
+					}
+					// default to equal
+					else {
+						if ($sql != '') {
+							$sql .= " AND ";
 						}
+						$sql .= "`{$condition['field']}` = '{$condition['value']}'";
 					}
 				}
-				$data = DBI::select($this->model['name'], null, $sql);
-				if (count($data) > 0) {
-					$this->populate($data[0]);
-				} else {
-					return false;
-				}
+			}
+
+			// execute DB query
+			$data = DBI::select($this->model['name'], null, $sql);
+
+			if (count($data) > 0) {
+				error_log('count greater than 0');
+				$this->populate($data[0]);
+			} else {
+				error_log('count less than or equal to 0');
+				return false;
 			}
 		} catch (\Exception $e) {
 			throw $e;
