@@ -182,7 +182,7 @@ class ModelObject
 				$data = DBI::sum($model['name'], $sumField, null, $sql);
 			}
 
-			return $data;
+			return $data[0];
 		} catch (\Exception $e) {
 			throw $e;
 			return false;
