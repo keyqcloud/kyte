@@ -256,7 +256,9 @@ class DBI {
 			self::connect();
 		}
 
-		$query = "SELECT SUM(`$sumField`) FROM `$table`";
+		$new_field_name = 'sum_'.$sumField;
+
+		$query = "SELECT SUM(`$sumField`) as `$new_field_name` FROM `$table`";
 
 		if(isset($id)) {
 			$query .= " WHERE id = $id";
