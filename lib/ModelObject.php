@@ -156,7 +156,7 @@ class ModelObject
 	 * @param string $value
 	 * @param integer $id
 	 */
-	public function sum($sumField, $field = null, $value = null, $conditions = null, $id = null, $all = false)
+	public static function sum($model, $sumField, $field = null, $value = null, $conditions = null, $id = null, $all = false)
 	{
 		$data = false;
 
@@ -182,7 +182,7 @@ class ModelObject
 						}
 					}
 				}
-				$data = DBI::sum($this->model['name'], $sumField, null, $sql);
+				$data = DBI::sum($model['name'], $sumField, null, $sql);
 			}
 
 			return $data;
