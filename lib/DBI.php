@@ -242,6 +242,43 @@ class DBI {
 		
 		return $data;
 	}
+
+	/*
+	 * Select from table in database and returns the first row only
+	 *
+	 * @param string $table
+	 * @param integer $id
+	 * @param string $condition
+	 */
+	public static function sum($table, $sumField, $id = null, $condition = null)
+	{
+		if (!self::$dbConn) {
+			self::connect();
+		}
+
+		$query = "SELECT SUM(`$sumField`) FROM `$table`";
+
+		if(isset($id)) {
+			$query .= " WHERE id = $id";
+		} else {
+			$query .= " $condition";
+		}
+
+		$result = self::$dbConn->query($query);
+		if($result === false) {
+  			throw new \Exception("Error with mysql query '$query'.");
+  			return false;
+		}
+
+		$data = array();
+		while ($row = $result->fetch_assoc()) {
+			$data[] = $row;
+		}
+
+		$result->free();
+		
+		return $data;
+	}
 }
 
 ?>

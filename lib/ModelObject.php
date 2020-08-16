@@ -150,6 +150,49 @@ class ModelObject
 	}
 
 	/*
+	 * Sum a field from DB
+	 *
+	 * @param string $field
+	 * @param string $value
+	 * @param integer $id
+	 */
+	public function sum($sumField, $field = null, $value = null, $conditions = null, $id = null, $all = false)
+	{
+		$data = false;
+
+		try {
+			if (!isset($sumField)) {
+				throw new \Exception("Sum field name is required");
+			}
+
+			if (isset($field, $value)) {
+				$sql = $all ? "WHERE `$field` = '$value'" : "WHERE `$field` = '$value' AND `deleted` = '0'";
+	
+				// if conditions are set, add them to the sql statement
+				if(isset($conditions)) {
+					// iterate through each condition
+					foreach($conditions as $condition) {
+						// check if an evaluation operator is set
+						if (isset($condition['operator'])) {
+							$sql .= " AND `{$condition['field']}` {$condition['operator']} '{$condition['value']}'";
+						}
+						// default to equal
+						else {
+							$sql .= " AND `{$condition['field']}` = '{$condition['value']}'";
+						}
+					}
+				}
+				$data = DBI::sum($this->model['name'], $sumField, null, $sql);
+			}
+
+			return $data;
+		} catch (\Exception $e) {
+			throw $e;
+			return false;
+		}
+	}
+
+	/*
 	 * Update entry information for item that was retrieved
 	 *
 	 * @param array $params
