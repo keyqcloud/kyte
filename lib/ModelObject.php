@@ -150,10 +150,8 @@ class ModelObject
 			$data = DBI::select($this->model['name'], null, $sql);
 
 			if (count($data) > 0) {
-				error_log('count greater than 0');
-				$this->populate($data[0]);
+				return $this->populate($data[0]);
 			} else {
-				error_log('count less than or equal to 0');
 				return false;
 			}
 		} catch (\Exception $e) {
