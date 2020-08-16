@@ -112,6 +112,7 @@ class ModelObject
 	 * @param string $value
 	 * @param integer $id
 	 */
+	/***** TODO : PHASE OUT ID */
 	public function retrieve($field = null, $value = null, $conditions = null, $id = null, $all = false)
 	{
 		try {
@@ -134,15 +135,11 @@ class ModelObject
 				}
 				$data = DBI::select($this->model['name'], null, $sql);
 				if (count($data) > 0) {
-					$id = $data[0]['id'];
+					$this->populate($data[0]);
+				} else {
+					return false;
 				}
 			}
-
-			if (isset($id)) {
-				$this->populate($id);
-
-				return true;
-			} else return false;
 		} catch (\Exception $e) {
 			throw $e;
 			return false;
@@ -222,25 +219,33 @@ class ModelObject
 	 * Populate object with entry information
 	 *
 	 */
-	public function populate($id = null)
+	public function populate($o = null)
 	{
 		try {
-			if ($this->getParam('id') === false && !isset($id)) {
+			if ($this->getParam('id') === false && !isset($o)) {
 				throw new \Exception("No object id was found to retrieve data.");
 				return false;
 			}
 
-			// if $id is null from parameter, set it to the object's id value
-			if (!isset($id)) {
-				$id = $this->getParam('id') === false;
-			}
+			if (is_array($o)) {
+				if (count($o) == 0) { return false; }
 
-			$data = DBI::select($this->model['name'], $id);
+				foreach ($o as $key => $value) {
+					$this->setParam($key, $value);
+				}
+			} else {
+				// if $id is null from parameter, set it to the object's id value
+				if (!isset($o)) {
+					$o = $this->getParam('id') === false;
+				}
 
-			if (count($data[0]) == 0) { return false; }
+				$data = DBI::select($this->model['name'], $o);
 
-			foreach ($data[0] as $key => $value) {
-				$this->setParam($key, $value);
+				if (count($data[0]) == 0) { return false; }
+
+				foreach ($data[0] as $key => $value) {
+					$this->setParam($key, $value);
+				}
 			}
 			
 			return true;
