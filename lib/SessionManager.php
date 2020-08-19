@@ -72,7 +72,7 @@ class SessionManager
 		
 	}
 
-	public function validate($txToken, $sessionToken, $new = true)
+	public function validate($txToken, $sessionToken, $sameToken = false)
 	{
 		if (!$this->session->retrieve('txToken', $txToken, [[ 'field' => 'sessionToken', 'value' => $sessionToken ]])) {
 			throw new \Kyte\SessionException("No valid session.");
@@ -86,7 +86,7 @@ class SessionManager
 		}
 		$time = time();
 		$exp_time = $time+(60*60);
-		if ($new) {
+		if (!$sameToken) {
 			$txToken = $this->generateTxToken($time, $exp_time, $this->user->getParam($this->username_field));
 		}
 		
