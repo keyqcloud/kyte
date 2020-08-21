@@ -85,7 +85,7 @@ class SessionManager
 			throw new \Kyte\SessionException("Session expired.");
 		}
 		$time = time();
-		$exp_time = $time+(60*60);
+		$exp_time = $time+$this->timeout;
 		if (!$sameToken) {
 			$txToken = $this->generateTxToken($time, $exp_time, $this->user->getParam($this->username_field));
 		}
