@@ -60,6 +60,9 @@ class DBI {
 		if (!self::$dbConn) {
 			try {
 				self::$dbConn = new \mysqli(self::$dbHost, self::$dbUser, self::$dbPassword, self::$dbName);
+				// set charset to utf8mb4
+				if ( TRUE !== self::$dbConn->set_charset( 'utf8mb4' ) )
+					throw new \Exception( self::$dbConn->error, self::$dbConn->errno );
 			} catch (mysqli_sql_exception $e) {
 				throw $e;
 			}
