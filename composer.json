@@ -2,7 +2,7 @@
     "name": "keyqcloud/kyte",
     "description": "Backend for managed Kyte services",
     "require": {
-	    "keyqcloud/kyte-php": "dev-master"
+	    "keyqcloud/kyte-php": "4.0.x-dev"
     },
     "repositories": [
         {
