@@ -2,14 +2,8 @@
     "name": "keyqcloud/kyte",
     "description": "Backend for managed Kyte services",
     "require": {
-	    "keyqcloud/kyte-php": "4.0.x-dev"
+            "keyqcloud/kyte-php": "^3.0"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/keyqcloud/kyte-php/"
-        }
-    ],
     "authors": [
         {
             "name": "Kenneth Hough",
