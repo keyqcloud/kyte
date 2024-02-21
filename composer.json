@@ -2,7 +2,7 @@
     "name": "keyqcloud/kyte",
     "description": "Backend for managed Kyte services",
     "require": {
-            "keyqcloud/kyte-php": "^3.0"
+            "keyqcloud/kyte-php": "^3.6"
     },
     "authors": [
         {
