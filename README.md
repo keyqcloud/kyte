@@ -11,7 +11,7 @@ Follow these steps to set up Kyte on your server:
 First, clone the Kyte repository into your web server's document root (e.g., `/var/www/html` or another directory where your web files are served).
 
 ```bash
-git clone https://github.com/keyqcloud/kyte.git /var/www/html/kyte
+git clone https://github.com/keyqcloud/kyte.git /var/www/html/
 ```
 
 ### 2. Install Dependencies
@@ -19,7 +19,7 @@ git clone https://github.com/keyqcloud/kyte.git /var/www/html/kyte
 Navigate to the Kyte directory and run Composer to install the necessary dependencies.
 
 ```bash
-cd /var/www/html/kyte
+cd /var/www/html/
 composer update
 ```
 
