@@ -1,5 +1,8 @@
 # Kyte
 
+> [!WARNING]
+> **Archived: no longer maintained.** This repository is read-only and kept for reference. It receives no further updates, including security fixes. The core of Kyte is in maintenance mode (security fixes through November 2027); see [kyte-php](https://github.com/keyqcloud/kyte-php).
+
 Kyte is a lightweight framework for building web applications. This README provides a quick guide on how to get started with Kyte.
 
 ## Getting Started
